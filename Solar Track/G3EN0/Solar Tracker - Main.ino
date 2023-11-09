@@ -26,11 +26,11 @@ void setup () {
   sensitivity = 5; // this controls the sensitivity of the tracker. lower number = higher sensitivity. if your tracker is constantly jittering back and forth increase the number
   Serial.begin(19200); // open serial com
   Serial.print("SolarTracker ready!");
-  pinMode(BOTTOM, INPUT); // set the inputs
-pinMode(TOPLEFT, INPUT);
-pinMode(TOPRIGHT, INPUT);
-pinMode(BOTRIGHT, INPUT);
-pinMode(BOTLEFT, INPUT);
+  //pinMode(BOTTOM, INPUT); // set the inputs
+  //pinMode(TOPLEFT, INPUT);
+  //pinMode(TOPRIGHT, INPUT);
+  //pinMode(BOTRIGHT, INPUT);
+  //pinMode(BOTLEFT, INPUT);
 }
 void loop () {
 tiltl = digitalRead(TILTL); // read the tilt sensor
