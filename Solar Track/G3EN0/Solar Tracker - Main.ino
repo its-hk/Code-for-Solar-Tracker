@@ -6,15 +6,15 @@ int X1Y1LDR;
 int X1Y2LDR;
 int X2Y1LDR;
 int X2Y2LDR;
-int tavg;
-int diff;
+int voltage;
+int current;
 int divisor;
 int spd;
 int sensitivity;
-#X1 = left 
-#X2 = RIGHT
-#Y1 = UP
-#Y2 = DOWN
+//X1 = left 
+//X2 = RIGHT
+//Y1 = UP
+//Y2 = DOWN
 
 
 
