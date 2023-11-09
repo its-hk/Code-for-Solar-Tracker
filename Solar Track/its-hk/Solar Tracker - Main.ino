@@ -27,13 +27,14 @@ void setup () {
   divisor = 10; // this controls the speed of the servo. lower number = higher speed
   sensitivity = 5; // this controls the sensitivity of the tracker. lower number = higher sensitivity. if your tracker is constantly jittering back and forth increase the number
   Serial.begin(19200); // open serial com
-  Serial.print("SolarTracker ready!");
-  pinMode(BOTTOM, INPUT); // set the inputs
-pinMode(TOPLEFT, INPUT);
-pinMode(TOPRIGHT, INPUT);
-pinMode(BOTRIGHT, INPUT);
-pinMode(BOTLEFT, INPUT);
+  Serial.print("Solar Tracker ready!");
+  //pinMode(BOTTOM, INPUT); // set the inputs
+  //pinMode(TOPLEFT, INPUT);
+  //pinMode(TOPRIGHT, INPUT);
+  //pinMode(BOTRIGHT, INPUT);
+  //pinMode(BOTLEFT, INPUT);
 }
+
 void loop () {
 tiltl = digitalRead(TILTL); // read the tilt sensor
 tilth = digitalRead(TILTH);
@@ -50,8 +51,8 @@ avgY2 = (x1y2+x2y2)/2
 
 
 
-tavg = (tlsense + trsense)/2; // get an average value for the top 2 sensors
-diff = abs(tavg - bsense); // this judges how far the tracker must turn
+//tavg = (tlsense + trsense)/2; // get an average value for the top 2 sensors
+//diff = abs(tavg - bsense); // this judges how far the tracker must turn
 spd = diff/divisor; // and adjusts the speed of the reaction accordingly
 spd = max(spd, 1); // sets the minimum speed to 1
 Serial.print("\nTOP: "); Serial.print(tavg, DEC); // print the sensor values to the serial com
