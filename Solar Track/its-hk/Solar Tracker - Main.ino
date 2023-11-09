@@ -22,8 +22,8 @@ Y2= DOWN
 
 
 void setup () {
-  vservo.attach(9); // attaches the servo on pin 9 to the servo object
-  hservo.attach(10); // attaches the servo on pin 10 to the servo object
+  yservo.attach(9); // attaches the servo on pin 9 to the servo object
+  xservo.attach(10); // attaches the servo on pin 10 to the servo object
   divisor = 10; // this controls the speed of the servo. lower number = higher speed
   sensitivity = 5; // this controls the sensitivity of the tracker. lower number = higher sensitivity. if your tracker is constantly jittering back and forth increase the number
   Serial.begin(19200); // open serial com
