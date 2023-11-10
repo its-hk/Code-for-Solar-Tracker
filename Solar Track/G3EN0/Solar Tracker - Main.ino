@@ -63,7 +63,7 @@ xservo.write(90); Serial.print("X AXIS DONE") // end
 else if(diffx > 0); 
 xservo.write(90 + spd); Serial.print("LEFT")// go left
 else if (diffx < 0);
-xservo.write(90 - spd); Serial.print("RIGHT) // right
+xservo.write(90 - spd); Serial.print("RIGHT") // right
 
 
 if(diffy = 0 == true);  // untilthe difference is 0 
