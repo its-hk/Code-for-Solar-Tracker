@@ -20,8 +20,8 @@ int sensitivity;
 
 
 void setup () {
-  vservo.attach(9); // attaches the servo on pin 9 to the servo object
-  hservo.attach(10); // attaches the servo on pin 10 to the servo object
+  xservo.attach(9); // attaches the servo on pin 9 to the servo object
+  yservo.attach(10); // attaches the servo on pin 10 to the servo object
   divisor = 10; // this controls the speed of the servo. lower number = higher speed
   sensitivity = 5; // this controls the sensitivity of the tracker. lower number = higher sensitivity. if your tracker is constantly jittering back and forth increase the number
   Serial.begin(19200); // open serial com
@@ -32,24 +32,33 @@ void setup () {
   pinMode(x2y2, INPUT);
 }
 void loop () {
-voltage = analogRead(TILTL); // read the tilt sensor
-current = analogRead(TILTH);
-x1y1 = analogRead(TOPLEFT); // read the light sensors
-X2y1 = analogRead(TOPRIGHT);
-x1y2 = analogRead(BOTLEFT); // read the light sensors
-X2y2 = analogRead(BOTRIGHT);
+voltage = analogRead(voltage); // read the voltages
+current = analogRead(current); // read the current
+x1y1 = analogRead(x1y1); // read the top left.
+x2y1 = analogRead(x2y1); // read the top right
+x1y2 = analogRead(x1y2); // read the bot left
+X2y2 = analogRead(x2y2); // read the bot right
 avgX1 = (x1y2 + x1y1)/2
 avgX2 = (x2y2+x2y1)/2
 avgY1 = (x1y1+x2Y1)/2
 avgY2 = (x1y2+x2y2)/2
+diffX =  ((x1y1+x1y2) - (x2y1+x2y2))
+diffy = ((x1y1+x2y1)-(x1y2+x2y2))
 
 
 
-
-tavg = (tlsense + trsense)/2; // get an average value for the top 2 sensors
-diff = abs(tavg - bsense); // this judges how far the tracker must turn
+//tavg = (tlsense + trsense)/2; // get an average value for the top 2 sensors
+//diff = abs(tavg - bsense); // this judges how far the tracker must turn
 spd = diff/divisor; // and adjusts the speed of the reaction accordingly
 spd = max(spd, 1); // sets the minimum speed to 1
+
+Serial.print("\nx1y1: "); Serial.print(diffx, DEC) 
+if(diffy > 0) // if more light is on the top
+yservo.write(90 + spd) // goes up
+else if(diffy < 0)
+yservo.write(90-spd) // goes down 
+
+
 Serial.print("\nTOP: "); Serial.print(tavg, DEC); // print the sensor values to the serial com
 Serial.print("\tBOTTOM:"); Serial.print(bsense, DEC);
 Serial.print("\tLEFT:"); Serial.print(tlsense, DEC);
