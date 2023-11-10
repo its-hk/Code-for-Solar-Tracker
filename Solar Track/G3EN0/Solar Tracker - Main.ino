@@ -52,12 +52,29 @@ diffy = ((x1y1+x2y1)-(x1y2+x2y2))
 spd = diff/divisor; // and adjusts the speed of the reaction accordingly
 spd = max(spd, 1); // sets the minimum speed to 1
 
-Serial.print("\nx1y1: "); Serial.print(diffx, DEC) 
-if(diffy > 0) // if more light is on the top
-yservo.write(90 + spd) // goes up
-else if(diffy < 0)
-yservo.write(90-spd) // goes down 
+Serial.print("\tx1y1: "); Serial.print(diffx, DEC) 
+Serial.print("\tx2y1: "); 
+Serial.print("\tx1y2 "); Serial.print(diffy, DEC) 
+Serial.print("\tx2y2: "); 
 
+  
+if (diffx = 0 == true);
+xservo.write(90); Serial.print("X AXIS DONE") // end
+else if(diffx > 0); 
+xservo.write(90 + spd); Serial.print("LEFT")// go left
+else if (diffx < 0);
+xservo.write(90 - spd); Serial.print("RIGHT) // right
+
+
+if(diffy = 0 == true);  // untilthe difference is 0 
+yservo.write(90); Serial.print("Y AXIS DONE") // stops it from moving 
+else if(diffy > 0); // if more light is on the top
+yservo.write(90 + spd); Serial.print("UP") // goes up
+else if(diffy < 0);
+yservo.write(90-spd); Serial.print("DOWN") // goes down 
+
+
+  
 
 Serial.print("\nTOP: "); Serial.print(tavg, DEC); // print the sensor values to the serial com
 Serial.print("\tBOTTOM:"); Serial.print(bsense, DEC);
