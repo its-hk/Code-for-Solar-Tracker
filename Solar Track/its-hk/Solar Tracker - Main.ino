@@ -1,28 +1,39 @@
-// Variable Declaration
+// Library Import
 #include "math.h"
 #include "Solar Track/Servo/src/Servo.h"
+
+//Servo Dec
+
 Servo yservo;
 Servo xservo;
+
+// Const Dec
 #define X1Y1LDR;
 #define X1Y2LDR;
 #define X2Y1LDR;
 #define X2Y2LDR;
-int voltage;
-int current;
+
+// Var Dec
 int divisor;
 int spd;
 int sensitivity;
-//X1 = left 
-//X2 = RIGHT
-//Y1 = UP
-//Y2 = DOWN
-
-
-
+int potPinX = 0;  // analog pin used to connect the potentiometer; CHANGE ACCORDINGLY
+int potPinY = 1;
+int valX;    // variable to read the value from the analog pin
+int valY;
+int x1y1;
+int x1y2;
+int x2y1;
+int x2y2;
+int avgX1;
+int avgX2;
+int avgY1;
+int avgY2;
+int threshold_value=10; 
 
 void setup () {
-  yservo.attach(9); // attaches the servo on pin 9 to the servo object
-  xservo.attach(10); // attaches the servo on pin 10 to the servo object
+  xservo.attach(9); // attaches the servo on pin 9 to the servo object
+  yservo.attach(10); // attaches the servo on pin 10 to the servo object
   divisor = 10; // this controls the speed of the servo. lower number = higher speed
   sensitivity = 5; // this controls the sensitivity of the tracker. lower number = higher sensitivity. if your tracker is constantly jittering back and forth increase the number
   Serial.begin(19200); // open serial com
@@ -35,19 +46,52 @@ void setup () {
 
 void loop () {
 
-x1y1 = analogRead(X1Y1LDR); // read the light sensors
-x1y2 = analogRead(X1Y2LDR);
-x2y1 = analogRead(X2Y1LDR); // read the light sensors
-x2y2 = analogRead(X2Y2LDR);
-//bsense = bsense * 1.05; // I had to adjust the value of this sensor to make it more accurate. you might have to do the same but start by leaving it alone
-x1 = (x1y2 + x1y1)/2
-x2 = (x2y2+x2y1)/2
-y1 = (x1y1+x2Y1)/2
-y2 = (x1y2+x2y2)/2
-// While loops
-do {
-  
-} while (x1 != x2)
+  x1y1 = analogRead(X1Y1LDR); // read the light sensors Left Bottom
+  x1y2 = analogRead(X1Y2LDR); // read the light sensors Left Top
+  x2y1 = analogRead(X2Y1LDR); // read the light sensors Right Bottom
+  x2y2 = analogRead(X2Y2LDR); // read the light sensors Right Top
+
+  // Average Calculations
+  avgX1 = (x1y2+x1y1)/2
+  avgX2 = (x2y2+x2y1)/2
+  avgY1 = (x1y1+x2Y1)/2
+  avgY2 = (x1y2+x2y2)/2
+
+  // Power Calc from Solar Panel
+  char  Mode;
+  float volt = analogRead(A5) * 5.0 / 1023; // CHANGE PIN
+  float voltage = 2 * volt;
+  float current = voltage / 20;
+  float power  = voltage * current;
+
+
+
+  // While loops
+  do {
+    switch (x1)
+    {
+    case (<x2):
+      if (y1 < y2) {
+        /* code */ 
+      } //Allows perfect diagonal movement to BOTTOM-LEFT
+      else if (y1 > y2) {
+       /* code */  
+      } //Allows perfect diagonal movement to TOP-LEFT
+      break;
+    case (>x2):
+      if (y1 < y2) {
+        /* code */ 
+      } //Allows perfect diagonal movement to TOP-LEFT
+      else if (y1 > y2) {
+        /* code */ 
+      } //Allows perfect diagonal movement to TOP-RIGHT
+      break;
+
+    }
+    
+  } while (x1 != x2 || y1 = y2)
+
+
 //tavg = (tlsense + trsense)/2; // get an average value for the top 2 sensors
 //diff = abs(tavg - bsense); // this judges how far the tracker must turn
 spd = diff/divisor; // and adjusts the speed of the reaction accordingly

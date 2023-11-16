@@ -1,96 +1,156 @@
-#define BOTTOM 2
-#define TOPLEFT 0
-#define TOPRIGHT 1
-#include "../Servo/Sr
-#include "math.h"
-Servo yservo;
-Servo xservo;
-int tlsense;
-int trsense;
-int bsense;
-int tavg;
-int diff;
-int spd;
-int divisor;
-int sensitivity;
-X1 = left 
-X2= RIGHT
-Y1= UP
-Y2= DOWN
+//Servo motor library
+#include <Servo.h>
+//Initialize variables
+int  mode = 0;
+int axe = 0;            
+int buttonState1 = 0;    
+int buttonState2  = 0;   
+int prevButtonState1 = 0;
+int prevButtonState2 = 0; 
+ 
+int ldrtopr=  0;                // top-right LDR                          
+int ldrtopl = 1;               // top-left LDR                          
+int ldrbotr = 2;               //  bottom-right LDR                     
+int ldrbotl = 3;               // bottom-left  LDR                   
+int topl = 0;
+int topr = 0; 
+int botl = 0;
+int  botr = 0;
+ 
 
 
+//Declare two servos
+Servo servo_updown;
+Servo servo_rightleft;
 
+int  threshold_value=10;           //measurement sensitivity
 
-void setup () {
-  vservo.attach(9); // attaches the servo on pin 9 to the servo object
-  hservo.attach(10); // attaches the servo on pin 10 to the servo object
-  divisor = 10; // this controls the speed of the servo. lower number = higher speed
-  sensitivity = 5; // this controls the sensitivity of the tracker. lower number = higher sensitivity. if your tracker is constantly jittering back and forth increase the number
-  Serial.begin(19200); // open serial com
-  Serial.print("SolarTracker ready!");
-  pinMode(BOTTOM, INPUT); // set the inputs
-pinMode(TOPLEFT, INPUT);
-pinMode(TOPRIGHT, INPUT);
-pinMode(BOTRIGHT, INPUT);
-pinMode(BOTLEFT, INPUT);
+void setup()
+{
+  Serial.begin(9600);                                //serial connection setup  //opens  serial port, sets data rate to 9600 bps
+  Serial.println("CLEARDATA");                       //clear  all data that’s been place in already
+  Serial.println("LABEL,t,voltage,current,power,Mode");   //define the column headings (PLX-DAQ command)
+
+  pinMode(12, INPUT);              //Mode  switch Button
+  pinMode(11, INPUT);              //Axis switch
+  pinMode(A4,  INPUT);              //Potentiometer for right-left movement and for up-down movement
+  
+  servo_updown.attach(5);             //Servo motor up-down movement
+  servo_rightleft.attach(6);          //Servo motor right-left movement
 }
-void loop () {
-tiltl = digitalRead(TILTL); // read the tilt sensor
-tilth = digitalRead(TILTH);
-x1y1sense = analogRead(TOPLEFT); // read the light sensors
-X2y1 = analogRead(TOPRIGHT);
-x1y2 = analogRead(BOTLEFT); // read the light sensors
-X2y2 = analogRead(BOTRIGHT);
-//bsense = bsense * 1.05; // I had to adjust the value of this sensor to make it more accurate. you might have to do the same but start by leaving it alone
-avgX1 = (x1y2 + x1y1)/2
-avgX2 = (x2y2+x2y1)/2
-avgY1 = (x1y1+x2Y1)/2
-avgY2 = (x1y2+x2y2)/2
 
-
-
-
-tavg = (tlsense + trsense)/2; // get an average value for the top 2 sensors
-diff = abs(tavg - bsense); // this judges how far the tracker must turn
-spd = diff/divisor; // and adjusts the speed of the reaction accordingly
-spd = max(spd, 1); // sets the minimum speed to 1
-Serial.print("\nTOP: "); Serial.print(tavg, DEC); // print the sensor values to the serial com
-Serial.print("\tBOTTOM:"); Serial.print(bsense, DEC);
-Serial.print("\tLEFT:"); Serial.print(tlsense, DEC);
-Serial.print("\tRIGHT:"); Serial.print(trsense, DEC);
-if((tavg < bsense) && (diff > sensitivity) && (tiltl == LOW) && (tilth == LOW)){ // if the average value of the top sensors is smaller (more light) than the bottom sensor and the tilt sensor is in the correct range
-vservo.write(90 - spd); // send servo command to turn upward plus add speed
-Serial.print("\tState: "); Serial.print("UP!");
-}else if((tavg < bsense) && (diff > sensitivity) && (tiltl == HIGH) && (tilth == LOW)){ // if the average value of the top sensors is smaller (more light) than the bottom sensor and the tilt sensor is in the correct range
-vservo.write(90 - spd); // send servo command to turn upward plus add speed
-Serial.print("\tState: "); Serial.print("UP!");
-}else if((tavg > bsense) && (diff > sensitivity) && (tiltl == HIGH) && (tilth == LOW)){ // if the value of the bottom sensor is smaller (more light) than the average value of the top sensors and the tilt sensor is in the correct range
-vservo.write(90 + spd); // send servo command to turn downward plus add speed
-Serial.print("\tState: "); Serial.print("DOWN!");
-}else if((tavg > bsense) && (diff > sensitivity) && (tiltl == LOW) && (tilth == HIGH)){ // if the value of the bottom sensor is smaller (more light) than the average value of the top sensors and the tilt sensor is in the correct range
-vservo.write(90 + spd); // send servo command to turn downward plus add speed
-Serial.print("\tState: "); Serial.print("DOWN!");
-}else{ // for every other instance
-vservo.write(90); // stop the y-axis motor
-Serial.print("\tState: "); Serial.print("STOP!");
+void loop()
+{
+//  pv_power();
+    char  Mode;
+    float volt = analogRead(A5)*5.0/1023;
+    float voltage = 2*volt;                //  Volt=(R1/R1+R2)*Voltage / R1=R2=10Ohms  => voltage=2*volt)
+    float current = voltage/20;            //  I=voltage/(R1+R2) 
+    float power  = voltage*current;
+    Serial.print("DATA,TIME,"); // PLX-DAQ command
+    Serial.print(voltage);    //send the voltage to serial port
+    Serial.print(",");
+    Serial.print(current);    //send the current to serial port
+    Serial.print(",");
+    Serial.print(power);  //send the power to serial port
+    Serial.print(",");
+    
+//    Serial.println(Mode);      
+  buttonState1 = digitalRead(12);
+  if (buttonState1 != prevButtonState1)  {
+    if (buttonState1 == HIGH) {
+      //Change mode and ligh up the correct  indicator  
+      if (mode == 1) {
+        mode = 0;
+      } else {
+        mode = 1;
+      }
+    }
+  }
+  prevButtonState1 = buttonState1;
+  delay(50); // Wait for 50 millisecond(s)
+  
+  if (mode == 0) {
+    Mode='M';
+    Serial.println(Mode);   //send Mode "Manual" to serial port    
+    manualsolartracker();
+  } else { // mode automatic
+    Mode = 'A';
+    Serial.println(Mode);      
+    automaticsolartracker(); //send Mode "Automatic" to serial port
+    } 
 }
-tlsense = analogRead(TOPLEFT); // read the top 2 sensors again because they have probably changed
-trsense = analogRead(TOPRIGHT);
-//trsense = trsense * 1.03; // again I had to adjust the value of one sensor to make the tracker more accurate
-diff = abs(tlsense - trsense); // reset the diff variable for the new values
-spd = diff/divisor; // and generate a speed accordingly
-spd = max(spd, 1); // set the minimum speed to 1
-if((tlsense < trsense) && (diff > sensitivity)){ // if the top left sensor value is smaller (more light) than the top right sensor
-hservo.write(90 + spd); // send servo command to turn left
-Serial.print("\tState: "); Serial.print("LEFT!");
-}else if((tlsense > trsense) && (diff > sensitivity)){ // if the top left sensor value is larger (less light) than the top right sensor
-hservo.write(90 - spd); // send servo command to turn right
-Serial.print("\tState: "); Serial.print("RIGHT!");
-}else{ // for every other instance
-hservo.write(90); // stop the x-axis motor
-Serial.print("\tState: "); Serial.print("STOP!");
+
+void  automaticsolartracker(){
+  
+     //capturing analog values of each LDR
+     topr= analogRead(ldrtopr);         //capturing analog value of top right LDR
+     topl= analogRead(ldrtopl);         //capturing analog value of top left LDR
+     botr= analogRead(ldrbotr);         //capturing analog value of bot right LDR
+     botl= analogRead(ldrbotl);         //capturing analog value of bot left LDR
+
+    // calculating average
+     int avgtop = (topr + topl) / 2;     //average  of top LDRs
+     int avgbot = (botr + botl) / 2;     //average of bottom LDRs
+     int avgleft = (topl + botl) / 2;    //average of left LDRs
+     int avgright  = (topr + botr) / 2;   //average of right LDRs
+   
+    //Get the different  
+     int diffelev = avgtop - avgbot;      //Get the different average betwen  LDRs top and LDRs bot
+     int diffazi = avgright - avgleft;    //Get the different  average betwen LDRs right and LDRs left
+    
+    //left-right movement of  solar tracker
+     
+      if (abs(diffazi) >= threshold_value){        //Change  position only if light difference is bigger then the threshold_value
+       if  (diffazi > 0) {
+        if (servo_rightleft.read() < 180) {
+          servo_rightleft.write((servo_updown.read()  + 2));
+        }
+      }
+      if (diffazi <  0) {
+        if (servo_rightleft.read()  > 0) {
+          servo_rightleft.write((servo_updown.read() - 2));
+        }
+      }
+    }
+             
+      //up-down movement of solar tracker
+
+      if (abs(diffelev) >= threshold_value){    //Change position only if light  difference is bigger then thethreshold_value
+       if (diffelev > 0) {
+        if  (servo_updown.read() < 180) {
+          servo_updown.write((servo_rightleft.read()  - 2));
+        }
+      }
+      if (diffelev <  0) {
+        if (servo_updown.read()  > 0) {
+          servo_updown.write((servo_rightleft.read() + 2));
+        }
+      }
+    }       
+ }  
+
+void manualsolartracker(){
+  buttonState2  = digitalRead(13);
+  if (buttonState2 != prevButtonState2) {
+    if (buttonState2  == HIGH) {
+      //Change mode and ligh up the correct indicator  
+      if  (axe == 1) {
+        axe = 0;
+      } else {
+        axe = 1;
+      }
+    }
+  }
+  prevButtonState2 = buttonState2;
+  delay(50); // Wait for 50  millisecond(s)
+  if (axe == 0) {     //control right-left movement
+    servo_rightleft.write(map(analogRead(A4),  0, 1023, 0, 180));
+  } else { // //control up-down movement
+    servo_updown.write(map(analogRead(A4),  0, 1023, 0, 180));
+  } 
 }
-delay(10); // delay 10ms
-Turning is 90 is toward left antilock wise
-If x1y1 > x2y1 
+
+
+
 
