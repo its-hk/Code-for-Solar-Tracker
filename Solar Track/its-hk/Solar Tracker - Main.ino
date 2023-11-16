@@ -1,11 +1,12 @@
 // Variable Declaration
 #include "math.h"
+#include "Solar Track/Servo/src/Servo.h"
 Servo yservo;
 Servo xservo;
-int X1Y1LDR;
-int X1Y2LDR;
-int X2Y1LDR;
-int X2Y2LDR;
+#define X1Y1LDR;
+#define X1Y2LDR;
+#define X2Y1LDR;
+#define X2Y2LDR;
 int voltage;
 int current;
 int divisor;
@@ -26,19 +27,27 @@ void setup () {
   sensitivity = 5; // this controls the sensitivity of the tracker. lower number = higher sensitivity. if your tracker is constantly jittering back and forth increase the number
   Serial.begin(19200); // open serial com
   Serial.print("Solar Tracker ready!");
+  pinMode(X1Y1LDR, INPUT);
+  pinMode(X1Y2LDR, INPUT);
+  pinMode(X2Y1LDR, INPUT);
+  pinMode(X2Y2LDR, INPUT);
 }
 
 void loop () {
 
-x1y1sense = analogRead(TOPLEFT); // read the light sensors
-X2y1 = analogRead(TOPRIGHT);
-x1y2 = analogRead(BOTLEFT); // read the light sensors
-X2y2 = analogRead(BOTRIGHT);
+x1y1 = analogRead(X1Y1LDR); // read the light sensors
+x1y2 = analogRead(X1Y2LDR);
+x2y1 = analogRead(X2Y1LDR); // read the light sensors
+x2y2 = analogRead(X2Y2LDR);
 //bsense = bsense * 1.05; // I had to adjust the value of this sensor to make it more accurate. you might have to do the same but start by leaving it alone
-avgX1 = (x1y2 + x1y1)/2
-avgX2 = (x2y2+x2y1)/2
-avgY1 = (x1y1+x2Y1)/2
-avgY2 = (x1y2+x2y2)/2
+x1 = (x1y2 + x1y1)/2
+x2 = (x2y2+x2y1)/2
+y1 = (x1y1+x2Y1)/2
+y2 = (x1y2+x2y2)/2
+// While loops
+do {
+  
+} while (x1 != x2)
 //tavg = (tlsense + trsense)/2; // get an average value for the top 2 sensors
 //diff = abs(tavg - bsense); // this judges how far the tracker must turn
 spd = diff/divisor; // and adjusts the speed of the reaction accordingly

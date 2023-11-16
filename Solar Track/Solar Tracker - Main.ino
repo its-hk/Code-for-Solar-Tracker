@@ -1,7 +1,7 @@
 #define BOTTOM 2
 #define TOPLEFT 0
 #define TOPRIGHT 1
-#include <Servo.h>
+#include "../Servo/Sr
 #include "math.h"
 Servo yservo;
 Servo xservo;
