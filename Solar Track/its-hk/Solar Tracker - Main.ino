@@ -38,7 +38,7 @@ void setup () {
   sensitivity = 5; // this controls the sensitivity of the tracker. lower number = higher sensitivity. if your tracker is constantly jittering back and forth increase the number
   Serial.begin(19200); // open serial com
   Serial.print("Solar Tracker ready!");
-  pinMode(X1Y1LDR, INPUT);
+  pinMode(X1Y1LDR, INPUT); //Did we not want a pin number for the pin mode?
   pinMode(X1Y2LDR, INPUT);
   pinMode(X2Y1LDR, INPUT);
   pinMode(X2Y2LDR, INPUT);
@@ -52,10 +52,10 @@ void loop () {
   x2y2 = analogRead(X2Y2LDR); // read the light sensors Right Top
 
   // Average Calculations
-  avgX1 = (x1y2+x1y1)/2
-  avgX2 = (x2y2+x2y1)/2
-  avgY1 = (x1y1+x2Y1)/2
-  avgY2 = (x1y2+x2y2)/2
+  avgX1 = (x1y2+x1y1)/2;
+  avgX2 = (x2y2+x2y1)/2;
+  avgY1 = (x1y1+x2Y1)/2;
+  avgY2 = (x1y2+x2y2)/2;
 
   // Power Calc from Solar Panel
   char  Mode;
@@ -67,29 +67,77 @@ void loop () {
 
 
   // While loops
-  do {
-    switch (x1)
-    {
-    case (<x2):
-      if (y1 < y2) {
-        /* code */ 
-      } //Allows perfect diagonal movement to BOTTOM-LEFT
-      else if (y1 > y2) {
-       /* code */  
-      } //Allows perfect diagonal movement to TOP-LEFT
-      break;
-    case (>x2):
-      if (y1 < y2) {
-        /* code */ 
-      } //Allows perfect diagonal movement to TOP-LEFT
-      else if (y1 > y2) {
-        /* code */ 
-      } //Allows perfect diagonal movement to TOP-RIGHT
-      break;
+  if (avgX1 != avgX2 && avgY1 != avgY2) {
+
+    do {
+
+      if (avgX1 < avgX2){
+
+        if (avgY1 < avgY2) {
+          /* code */ 
+        } //Allows perfect diagonal movement to BOTTOM-LEFT
+
+        else if (avgY1 > avgY2) {
+        /* code */  
+        } //Allows perfect diagonal movement to TOP-LEFT
+
+      }
+
+      else if (avgX1 > avgX2) {
+
+        if (avgY1 < avgY2) {
+          /* code */ 
+        } //Allows perfect diagonal movement to TOP-LEFT
+
+        else if (avgY1 > avgY2) {
+          /* code */ 
+        } //Allows perfect diagonal movement to TOP-RIGHT
+
+      }
+
+    } while (avgX1 != avgX2 || avgY1 != avgY2);
+
+  }
+
+  else if (avgX1 != avgX2) {
+
+    if (avgY1 < avgY2) {
+
+      do {
+        /*code*/
+      } while (avgY1 != avgY2);
+
+    }
+
+    else {
+
+     do {
+        /*code*/
+      } while (avgY1 != avgY2);
+
+    }
+
+  }
+
+  else if (avgY1 != avgY2) {
+
+    if (avgY1 < avgY2) {
+
+      do {
+        /*code*/
+      } while (avgY1 != avgY2);
+
+    }
+
+    else {
+
+     do {
+        /*code*/
+      } while (avgY1 != avgY2);
 
     }
     
-  } while (x1 != x2 || y1 = y2)
+  }
 
 
 //tavg = (tlsense + trsense)/2; // get an average value for the top 2 sensors
