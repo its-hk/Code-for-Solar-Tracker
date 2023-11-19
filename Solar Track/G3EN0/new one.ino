@@ -70,6 +70,7 @@ void loop () {
   if (avgX1 != avgX2 && avgY1 != avgY2) {
 
     do {
+      
 
       if (avgX1 < avgX2){
 
@@ -149,4 +150,7 @@ Serial.print("\tBOTTOM:"); Serial.print(bsense, DEC);
 Serial.print("\tLEFT:"); Serial.print(tlsense, DEC);
 Serial.print("\tRIGHT:"); Serial.print(trsense, DEC);
 }
+
+
+
 
