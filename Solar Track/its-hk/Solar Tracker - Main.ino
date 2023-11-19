@@ -21,14 +21,14 @@ int potPinX = 0;  // analog pin used to connect the potentiometer; CHANGE ACCORD
 int potPinY = 1;
 int valX;    // variable to read the value from the analog pin
 int valY;
-int x1y1;
-int x1y2;
-int x2y1;
-int x2y2;
-int avgX1;
-int avgX2;
-int avgY1;
-int avgY2;
+int l2;
+int l1;
+int l3;
+int l4;
+//int avgX1;
+//int avgX2;
+//int avgY1;
+//int avgY2;
 int threshold_value=10; 
 
 void setup () {
@@ -46,16 +46,16 @@ void setup () {
 
 void loop () {
 
-  x1y1 = analogRead(X1Y1LDR); // read the light sensors Left Bottom
-  x1y2 = analogRead(X1Y2LDR); // read the light sensors Left Top
-  x2y1 = analogRead(X2Y1LDR); // read the light sensors Right Bottom
-  x2y2 = analogRead(X2Y2LDR); // read the light sensors Right Top
+  l2 = analogRead(X1Y1LDR); // read the light sensors Left Bottom
+  l1 = analogRead(X1Y2LDR); // read the light sensors Left Top
+  l3 = analogRead(X2Y1LDR); // read the light sensors Right Bottom
+  l4 = analogRead(X2Y2LDR); // read the light sensors Right Top
 
   // Average Calculations
-  avgX1 = (x1y2+x1y1)/2;
-  avgX2 = (x2y2+x2y1)/2;
-  avgY1 = (x1y1+x2Y1)/2;
-  avgY2 = (x1y2+x2y2)/2;
+  //avgX1 = (x1y2+x1y1)/2;
+  //avgX2 = (x2y2+x2y1)/2;
+  //avgY1 = (x1y1+x2Y1)/2;
+  //avgY2 = (x1y2+x2y2)/2;
 
   // Power Calc from Solar Panel
   char  Mode;
