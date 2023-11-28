@@ -153,4 +153,243 @@ Serial.print("\tRIGHT:"); Serial.print(trsense, DEC);
 
 
 
+switch (quadrant) {
+  case 1:
+    L1 < L2
+      L1 < L3
+      L1 < L4
+    case 5; 
+    L2 < L3
+    L2 < L4
+    xservo.write(60)
+    void loop
+  for (pos = 30; pos <= 120; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 120; pos >= 30; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+   
+yservo.write(45)
+     void loop
+  for (pos = 0; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+if bsene > 1 
+  yservo.write (
+    break;
+case 6:
+   L4 < L3
+    L4 < L2
+    xservo.write(45)
+    void loop
+  for (pos = 0; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+   
+yservo.write(45)
+     void loop
+  for (pos = 0; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+if bsene > 1 
+  yservo.write (
+    break;
+
+  case 2:
+  L2 < L1
+      L2 < L3
+      L2 < L4
+       case 8; 
+    L1 < L3
+    L1 < L4
+    xservo.write(120)
+    void loop
+  for (pos = 60; pos <= 150; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 150; pos >= 60; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+   
+yservo.write(45)
+     void loop
+  for (pos = 0; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+if bsene > 1 
+  yservo.write (
+    break;
+case 9:
+   L3 < L1
+    L3 < L2
+    xservo.write(135)
+    void loop
+  for (pos = 90; pos <= 180; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 180; pos >= 90; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+   
+yservo.write(45)
+     void loop
+  for (pos = 0; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+if bsene > 1 
+  yservo.write (
+    break;
+
+    break;
+  case 3:
+      L3 < L1
+      L3 < L2
+      L3 < L4
+   case 10; 
+    L2 < L4
+    L2 < L1
+    xservo.write(45)
+    void loop
+  for (pos = 0; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+   
+yservo.write(45)
+     void loop
+  for (pos = 90; pos <= 180; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+if bsene > 1 
+  yservo.write (
+    break;
+case 11:
+   L4 < L1
+    L4 < L3
+    xservo.write(135)
+    void loop
+  for (pos = 90; pos <= 180; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 180; pos >= 90; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+   
+yservo.write(45)
+     void loop
+  for (pos = 90; pos <= 180; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 180; pos >= 90; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+if bsene > 1 
+  yservo.write (
+    break;     
+    break;
+  case 4:
+L4> L1
+  L4>L2
+  L4>L3
+  case 12; 
+    L1 < L3
+    L1 < L2
+    xservo.write(180)
+    void loop
+  for (pos = 180; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 180; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+   
+yservo.write(45)
+     void loop
+  for (pos = 180; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 180; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+if bsene > 1 
+  yservo.write (
+    break;
+case 13:
+   L3 < L1
+    L3 < L2
+    xservo.write(135)
+    void loop
+  for (pos = 90; pos <= 180; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 180; pos >= 90; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+   
+yservo.write(45)
+     void loop
+  for (pos = 180; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 90; pos >= 180; pos -= 1) { // goes from 90 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+if bsene > 1 
+  yservo.write (
+    break;
+    break;
+
 
