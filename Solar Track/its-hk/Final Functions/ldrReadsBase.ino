@@ -18,5 +18,9 @@ sensorValueQ1 = analogRead(sensorPinQ1); // read the value from the sensor
 sensorValueQ2 = analogRead(sensorPinQ2); // read the value from the sensor
 sensorValueQ3 = analogRead(sensorPinQ3); // read the value from the sensor
 sensorValueQ4 = analogRead(sensorPinQ4); // read the value from the sensor
+Serial.println(sensorValueQ1);
+Serial.println(sensorValueQ2);
+Serial.println(sensorValueQ3);
+Serial.println(sensorValueQ4);
 delay(100);
 }
