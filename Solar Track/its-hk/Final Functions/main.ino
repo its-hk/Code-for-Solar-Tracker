@@ -26,7 +26,8 @@ public:
 
 // Arrays
 
-int sweep[50];
+int sweepLDR5read[50];
+int sweepLDR6read[50];
 
 // Variable Initialization
 int sensorPinQ1 = A0; // select the input pin for LDR
@@ -36,18 +37,13 @@ int sensorPinQ4 = A3;
 int sensorPinT1 = A4; 
 int sensorPinT2 = A5;
 
-int sensorValueQ1 = 0; // variable to store the value coming from the sensor
-int sensorValueQ2 = 0;
-int sensorValueQ3 = 0;
-int sensorValueQ4 = 0;
-int sensorValueT1 = 0; 
-int sensorValueT2 = 0;
-
 int posX = 0;  // variable to store the initial servo position
 int posY = 62.5;    
 int posT = 10;
 
 int diff = 0;
+
+int minValue;
 
 const int dataSize = 4;
 
@@ -79,6 +75,7 @@ void printData() {
   Serial.println();
 }
 
+
 // Initialisation
 
 void setup() {
@@ -92,10 +89,10 @@ void setup() {
 // Main Loop
 
 void loop() {
-    baseLDRread[0] = LabeledData("Q1",(sensorValueQ1)); // read the value from the sensor
-    baseLDRread[1] = LabeledData("Q2",(sensorValueQ2));
-    baseLDRread[2] = LabeledData("Q3",(sensorValueQ3));
-    baseLDRread[3] = LabeledData("Q4",(sensorValueQ4));
+    baseLDRread[0] = LabeledData("Q1",analogRead(sensorPinQ1)); // read the value from the sensor
+    baseLDRread[1] = LabeledData("Q2",analogRead(sensorPinQ2));
+    baseLDRread[2] = LabeledData("Q3",analogRead(sensorPinQ3));
+    baseLDRread[3] = LabeledData("Q4",analogRead(sensorPinQ4));
 
     bubbleSort(baseLDRread, dataSize);
 
@@ -110,32 +107,380 @@ void loop() {
 
     if (strcmp(qLowestRes, "Q1") == 0) {
       if (strcmp(qNextLowestRes, "Q2") == 0) {
+        posX = 85;
+        xservo.write(posX);
+        yservo.write();
+        tservo.write();
+        for (posX; posX <= 175; posX+= 2) {
+          xservo.write(posX);
+          delay(15);
+          sweepLDR5read[posX-85].append(analogRead(sensorPinT1));
+          sweepLDR6read[posX-85].append(analogRead(sensorPinT2)); 
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR5 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR5 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR5read[i] < minValue) {
+              minValueLDR5 = sweepLDR5read[i];
+              minIndexLDR5 = i;
+            }
+          }
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR6 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR6 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR6read[i] < minValue) {
+              minValueLDR6 = sweepLDR6read[i];
+              minIndexLDR6 = i;
+            }
+        }
+
+        if (minValueLDR6 == minValueLDR5) {
+          xservo.write(minIndexLDR5 + 85);
+        } else {
+          xservo.write(minValueLDR6 + 85);
+        }
+
+        if (minValueLDR6 < minValueLDR5) {
+          do {
+            tservo.write(21.25 + 2);
+            yservo.write(62.5 + 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        } else if (minValueLDR6 > minValueLDR5) {
+          do { 
+            tservo.write(21.25 - 2);
+            yservo.write(62.5 - 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        }
+
+
       }
       if (strcmp(qNextLowestRes, "Q3") == 0) {
+        xservo.write(posX);
+        yservo.write(posY);    
+        tservo.write(posT);
       }
       if (strcmp(qNextLowestRes, "Q4") == 0) {
-      } 
+        posX = 85;
+        xservo.write(posX);
+        yservo.write(62.5);
+        tservo.write(21.25);
+        for (posX; posX <= 180; posX+= 2) {
+          xservo.write(posX);
+          delay(15);
+          sweepLDR5read[posX-85].append(analogRead(sensorPinT1));
+          sweepLDR6read[posX-85].append(analogRead(sensorPinT2)); 
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR5 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR5 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR5read[i] < minValue) {
+              minValueLDR5 = sweepLDR5read[i];
+              minIndexLDR5 = i;
+            }
+          }
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR6 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR6 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR6read[i] < minValue) {
+              minValueLDR6 = sweepLDR6read[i];
+              minIndexLDR6 = i;
+            }
+        }
+
+        if (minValueLDR6 == minValueLDR5) {
+          xservo.write(minIndexLDR5 + 85);
+        } else {
+          xservo.write(minValueLDR6 + 85);
+        }
+
+        if (minValueLDR6 < minValueLDR5) {
+          do {
+            tservo.write(21.25 + 2);
+            yservo.write(81.25 + 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        } else if (minValueLDR6 > minValueLDR5) {
+          do { 
+            tservo.write(21.25 - 2);
+            yservo.write(81.25 - 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        }
+} 
     } else if (strcmp(qLowestRes, "Q2") == 0) {
       if (strcmp(qNextLowestRes, "Q1") == 0) {
-      }
-      if (strcmp(qNextLowestRes, "Q3") == 0) {
+        posX = 85;
+        xservo.write(posX);
+        yservo.write();
+        tservo.write();
+        for (posX; posX <= 180; posX+= 2) {
+          xservo.write(posX);
+          delay(15);
+          sweepLDR5read[posX-85].append(analogRead(sensorPinT1));
+          sweepLDR6read[posX-85].append(analogRead(sensorPinT2)); 
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR5 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR5 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR5read[i] < minValue) {
+              minValueLDR5 = sweepLDR5read[i];
+              minIndexLDR5 = i;
+            }
+          }
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR6 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR6 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR6read[i] < minValue) {
+              minValueLDR6 = sweepLDR6read[i];
+              minIndexLDR6 = i;
+            }
+        }
+
+        if (minValueLDR6 == minValueLDR5) {
+          xservo.write(minIndexLDR5 + 85);
+        } else {
+          xservo.write(minValueLDR6 + 85);
+        }
+
+        if (minValueLDR6 < minValueLDR5) {
+          do {
+            tservo.write(21.25 + 2);
+            yservo.write(62.5 + 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        } else if (minValueLDR6 > minValueLDR5) {
+          do { 
+            tservo.write(21.25 - 2);
+            yservo.write(62.5 - 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        }
+
+
       }
       if (strcmp(qNextLowestRes, "Q4") == 0) {
-      } 
+        xservo.write(posX);
+        yservo.write(posY);    
+        tservo.write(posT);
+      }
+      if (strcmp(qNextLowestRes, "Q3") == 0) {
+        posX = 85;
+        xservo.write(posX);
+        yservo.write(62.5);
+        tservo.write(21.25);
+        for (posX; posX <= 180; posX+= 2) {
+          xservo.write(posX);
+          delay(15);
+          sweepLDR5read[posX-85].append(analogRead(sensorPinT1));
+          sweepLDR6read[posX-85].append(analogRead(sensorPinT2)); 
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR5 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR5 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR5read[i] < minValue) {
+              minValueLDR5 = sweepLDR5read[i];
+              minIndexLDR5 = i;
+            }
+          }
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR6 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR6 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR6read[i] < minValue) {
+              minValueLDR6 = sweepLDR6read[i];
+              minIndexLDR6 = i;
+            }
+        }
+
+        if (minValueLDR6 == minValueLDR5) {
+          xservo.write(minIndexLDR5 + 85);
+        } else {
+          xservo.write(minValueLDR6 + 85);
+        }
+
+        if (minValueLDR6 < minValueLDR5) {
+          do {
+            tservo.write(21.25 + 2);
+            yservo.write(81.25 + 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        } else if (minValueLDR6 > minValueLDR5) {
+          do { 
+            tservo.write(21.25 - 2);
+            yservo.write(81.25 - 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        }
     } else if (strcmp(qLowestRes, "Q3") == 0) {
-      if (strcmp(qNextLowestRes, "Q1") == 0) {
-      }
       if (strcmp(qNextLowestRes, "Q2") == 0) {
+        posX = 85;
+        xservo.write(posX);
+        yservo.write();
+        tservo.write();
+        for (posX; posX <= 180; posX+= 2) {
+          xservo.write(posX);
+          delay(15);
+          sweepLDR5read[posX-85].append(analogRead(sensorPinT1));
+          sweepLDR6read[posX-85].append(analogRead(sensorPinT2)); 
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR5 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR5 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR5read[i] < minValue) {
+              minValueLDR5 = sweepLDR5read[i];
+              minIndexLDR5 = i;
+            }
+          }
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR6 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR6 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR6read[i] < minValue) {
+              minValueLDR6 = sweepLDR6read[i];
+              minIndexLDR6 = i;
+            }
+        }
+
+        if (minValueLDR6 == minValueLDR5) {
+          xservo.write(minIndexLDR5 + 85);
+        } else {
+          xservo.write(minValueLDR6 + 85);
+        }
+
+        if (minValueLDR6 < minValueLDR5) {
+          do {
+            tservo.write(21.25 + 2);
+            yservo.write(62.5 + 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        } else if (minValueLDR6 > minValueLDR5) {
+          do { 
+            tservo.write(21.25 - 2);
+            yservo.write(62.5 - 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        }
+
+
+      }
+      if (strcmp(qNextLowestRes, "Q1") == 0) {
+        xservo.write(posX);
+        yservo.write(posY);    
+        tservo.write(posT);
       }
       if (strcmp(qNextLowestRes, "Q4") == 0) {
-      } 
-    } else if (strcmp(qLowestRes, "Q4") == 0) {
-      if (strcmp(qNextLowestRes, "Q1") == 0) {
-      }
-      if (strcmp(qNextLowestRes, "Q2") == 0) {
-      }
-      if (strcmp(qNextLowestRes, "Q3") == 0) {
-      } 
-    }
-    delay(1000);
+        posX = 85;
+        xservo.write(posX);
+        yservo.write(62.5);
+        tservo.write(21.25);
+        for (posX; posX <= 180; posX+= 2) {
+          xservo.write(posX);
+          delay(15);
+          sweepLDR5read[posX-85].append(analogRead(sensorPinT1));
+          sweepLDR6read[posX-85].append(analogRead(sensorPinT2)); 
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR5 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR5 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR5read[i] < minValue) {
+              minValueLDR5 = sweepLDR5read[i];
+              minIndexLDR5 = i;
+            }
+          }
+          int arraySize = sizeof(sweepLDR5read[]) / sizeof(myArray[0]);
+
+          // Initialize the minimum value with the first element of the array
+          int minValueLDR6 = sweepLDR5read[];
+
+          // Initialize the index of the minimum value
+          int minIndexLDR6 = 0;
+
+          // Iterate through the array to find the minimum value and its index
+          for (int i = 1; i < arraySize; i++) {
+            if (sweepLDR6read[i] < minValue) {
+              minValueLDR6 = sweepLDR6read[i];
+              minIndexLDR6 = i;
+            }
+        }
+
+        if (minValueLDR6 == minValueLDR5) {
+          xservo.write(minIndexLDR5 + 85);
+        } else {
+          xservo.write(minValueLDR6 + 85);
+        }
+
+        if (minValueLDR6 < minValueLDR5) {
+          do {
+            tservo.write(21.25 + 2);
+            yservo.write(81.25 + 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        } else if (minValueLDR6 > minValueLDR5) {
+          do { 
+            tservo.write(21.25 - 2);
+            yservo.write(81.25 - 2);
+          } while (minIndexLDR5 != minIndexLDR6)
+        }
+
+    delay(10000);
 }
