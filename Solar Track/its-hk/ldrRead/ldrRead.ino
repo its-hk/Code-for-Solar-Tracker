@@ -1,7 +1,7 @@
 // Libraries
 #include "Servo.h"
 
-//Servo Dec
+// Servo Dec
 Servo xservo;
 Servo yservo;
 Servo tservo;
@@ -24,7 +24,11 @@ public:
   }
 };
 
-//Variable Initialization
+// Arrays
+
+int sweep[50];
+
+// Variable Initialization
 int sensorPinQ1 = A0; // select the input pin for LDR
 int sensorPinQ2 = A1;
 int sensorPinQ3 = A2;
@@ -75,6 +79,8 @@ void printData() {
   Serial.println();
 }
 
+// Initialisation
+
 void setup() {
     Serial.begin(9600); // Intialises serial port for communication
 
@@ -82,6 +88,8 @@ void setup() {
     yservo.attach(10);
     tservo.attach(11);
 }
+
+// Main Loop
 
 void loop() {
     baseLDRread[0] = LabeledData("Q1",(sensorValueQ1)); // read the value from the sensor
