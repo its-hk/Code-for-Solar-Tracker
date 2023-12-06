@@ -6,16 +6,23 @@ Servo xservo;
 Servo yservo;
 Servo tservo;
 
-// Objects
-class Data {
+// Classes
+class LabeledData {
 public:
-    int value;
+  char label[3]; // Label to identify the data
+  int value;     // Value associated with the label
 
-    Data() : value(0) {}
+  // Default constructor
+  LabeledData() : value(0) {
+    label[0] = '\0';
+  }
 
-    Data(int val) : value(val) {}
+  // Parameterized constructor
+  LabeledData(const char lbl[], int val) : value(val) {
+    strncpy(label, lbl, sizeof(label) - 1);
+    label[sizeof(label) - 1] = '\0'; // Ensure null-terminated string
+  }
 };
-
 
 //Variable Initialization
 int sensorPinQ1 = A0; // select the input pin for LDR
@@ -38,32 +45,34 @@ int posT = 10;
 
 int diff = 0;
 
-int dataSize = 4;
+const int dataSize = 4;
 
-Data dataArray[dataSize];
+LabeledData baseLDRread[dataSize];
 
 // Functions
 
-void bubbleSort(Data arr[], int size) {
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = 0; j < size - i - 1; j++) {
-            if (arr[j].value > arr[j + 1].value) {
-            // Swap the elements if they are in the wrong order
-            Data temp = arr[j];
-            arr[j] = arr[j + 1];
-            arr[j + 1] = temp;
-            }
-        }
+void bubbleSort(LabeledData arr[], int size) {
+  for (int i = 0; i < size - 1; i++) {
+    for (int j = 0; j < size - i - 1; j++) {
+      if (arr[j].value > arr[j + 1].value) {
+        // Swap the elements if they are in the wrong order
+        LabeledData temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
     }
+  }
 }
 
 void printData() {
-    Serial.print("Data: ");
-    for (int i = 0; i < dataSize; i++) {
-    Serial.print(dataArray[i].value);
+  Serial.print("Data: ");
+  for (int i = 0; i < dataSize; i++) {
+    Serial.print(baseLDRread[i].label);
+    Serial.print(":");
+    Serial.print(baseLDRread[i].value);
     Serial.print(" ");
-    }
-    Serial.println();
+  }
+  Serial.println();
 }
 
 void setup() {
@@ -75,10 +84,18 @@ void setup() {
 }
 
 void loop() {
-    dataArray[0] = analogRead(sensorValueQ1); // read the value from the sensor
-    dataArray[1] = analogRead(sensorValueQ2); 
-    dataArray[2] = analogRead(sensorValueQ3); 
-    dataArray[3] = analogRead(sensorValueQ4);
+    baseLDRread[0] = LabeledData("Q1",(sensorValueQ1)); // read the value from the sensor
+    baseLDRread[1] = LabeledData("Q2",(sensorValueQ2));
+    baseLDRread[2] = LabeledData("Q3",(sensorValueQ3));
+    baseLDRread[3] = LabeledData("Q4",(sensorValueQ4));
 
-    printData();
+    bubbleSort(baseLDRread, dataSize);
+
+    char* qLowestRes = dataArray[0].label;
+    char* qNextLowstRes = dataArray[1].label; 
+
+    Serial.println(qLowestRes);
+    Serial.println(qNextLowstRes);
+
+    delay(1000);
 }
