@@ -1,5 +1,6 @@
 // Libraries
 #include "Servo.h"
+#include "strings.h"
 
 //Servo Dec
 Servo xservo;
@@ -23,6 +24,9 @@ public:
     label[sizeof(label) - 1] = '\0'; // Ensure null-terminated string
   }
 };
+
+// Arrays
+int sweep[50];
 
 //Variable Initialization
 int sensorPinQ1 = A0; // select the input pin for LDR
@@ -91,11 +95,42 @@ void loop() {
 
     bubbleSort(baseLDRread, dataSize);
 
-    char* qLowestRes = dataArray[0].label;
-    char* qNextLowstRes = dataArray[1].label; 
+    char qLowestRes[3];
+    strcpy(qLowestRes, baseLDRread[0].label);
+
+    char qNextLowestRes[3] = dataArray[1].label; 
 
     Serial.println(qLowestRes);
-    Serial.println(qNextLowstRes);
+    Serial.println(qNextLowestRes);
 
+    if (strcmp(qLowestRes, "Q1") == 0) {
+      if (strcmp(qNextLowestRes, "Q2") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q3") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q4") == 0) {
+      } 
+    } else if (strcmp(qLowestRes, "Q2") == 0) {
+      if (strcmp(qNextLowestRes, "Q1") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q3") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q4") == 0) {
+      } 
+    } else if (strcmp(qLowestRes, "Q3") == 0) {
+      if (strcmp(qNextLowestRes, "Q1") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q2") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q4") == 0) {
+      } 
+    } else if (strcmp(qLowestRes, "Q4") == 0) {
+      if (strcmp(qNextLowestRes, "Q1") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q2") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q3") == 0) {
+      } 
+    }
     delay(1000);
 }

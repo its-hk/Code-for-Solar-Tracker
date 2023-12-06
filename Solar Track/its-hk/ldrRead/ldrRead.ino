@@ -91,11 +91,43 @@ void loop() {
 
     bubbleSort(baseLDRread, dataSize);
 
-    char* qLowestRes = baseLDRread[0].label;
-    char* qNextLowstRes = baseLDRread[1].label; 
+    char qLowestRes[3];
+    strcpy(qLowestRes, baseLDRread[0].label);
+
+    char qNextLowestRes[3];
+    strcpy(qNextLowestRes, baseLDRread[1].label);
 
     Serial.println(qLowestRes);
-    Serial.println(qNextLowstRes);
+    Serial.println(qNextLowestRes);
 
+    if (strcmp(qLowestRes, "Q1") == 0) {
+      if (strcmp(qNextLowestRes, "Q2") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q3") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q4") == 0) {
+      } 
+    } else if (strcmp(qLowestRes, "Q2") == 0) {
+      if (strcmp(qNextLowestRes, "Q1") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q3") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q4") == 0) {
+      } 
+    } else if (strcmp(qLowestRes, "Q3") == 0) {
+      if (strcmp(qNextLowestRes, "Q1") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q2") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q4") == 0) {
+      } 
+    } else if (strcmp(qLowestRes, "Q4") == 0) {
+      if (strcmp(qNextLowestRes, "Q1") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q2") == 0) {
+      }
+      if (strcmp(qNextLowestRes, "Q3") == 0) {
+      } 
+    }
     delay(1000);
 }
